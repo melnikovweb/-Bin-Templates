@@ -1,0 +1,46 @@
+<script>
+	var articleBody = document.querySelector(".articleBody").innerText;
+      let schema = {
+  "@context": "https://schema.org", 
+ "@type": "Article",
+ "headline": "<?php wp_title( ); ?>",
+ "image": "<?php echo get_the_post_thumbnail_url( ); ?>",
+		      "author": {
+        "@type": "Person",
+        "name": "<?php the_author(); ?>",
+        "url": "https://www.smokeandpoke.com/blog/melissa/"
+      },
+ "genre": "<?php $category = get_the_category();
+echo $category[0]->name; ?>",
+ "keywords": "<?php $keywords = get_post_meta( get_queried_object_id(), 'wp_keywords', true ); echo $keywords; ?>", 
+ "wordcount": "<?php if(function_exists('ec_post_word_count')) {
+    ec_post_word_count();
+}
+ ?>",
+"publisher": {
+    "@type": "Organization",
+    "name": "<?php $blog_description = get_bloginfo('description'); ?>
+<?php echo $blog_description ?>",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "<?php $custom_logo__url = wp_get_attachment_image_src( get_theme_mod( 'custom_logo' ), 'full' ); 
+echo $custom_logo__url[0]; ?>"
+    }
+  },
+ "url": "<?php echo get_home_url(); ?>",
+   "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "<?php echo get_permalink(); ?>"
+  },
+ "datePublished": "<?php the_date('d-m-Y'); ?>",
+ "dateCreated": "<?php echo get_the_date('d-m-Y'); ?>",
+ "dateModified": "<?php the_modified_date('d-m-Y'); ?>",
+ "description": "<?php echo get_post_meta(get_the_ID(), '_yoast_wpseo_metadesc', true); ?>",
+ "articleBody": articleBody,
+      }      
+      let script = document.createElement('script');
+        script.type = "application/ld+json";
+        script.text = JSON.stringify(schema);
+
+        document.querySelector('body').appendChild(script);
+</script>

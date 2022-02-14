@@ -1,0 +1,1 @@
+let articleBody = document.querySelector(".articlebody").innerText; alert(articleBody);
